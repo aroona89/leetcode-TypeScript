@@ -1,4 +1,5 @@
-// Q1 "TWO SUM problem in TypeScript using a hash table (also known as a hash map or dictionary) "
+// Q4 "Longest Common Prefix (topic covered: string, trie)"
+
 function twoSum(nums: number[], target: number): number[] {
   const map: Map<number, number> = new Map(); // Create a map to store values and their indices
 
