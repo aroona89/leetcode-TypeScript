@@ -1,1 +1,1 @@
-# leetcode-TypeScript
+# problem solving
