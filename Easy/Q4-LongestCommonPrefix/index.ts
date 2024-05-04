@@ -1,5 +1,5 @@
 /* Q4 "Longest Common Prefix (topic covered: string, trie)"
-A Trie (also known as a prefix tree) is a data structure used to efficiently store and search for a list of words.
+A Trie (“retrieval” or “prefix tree”) is a data structure used to efficiently store and search for a list of words.
 Searching for Prefixes: Tries allow efficient prefix-based searches 
 (e.g., Useful for functionalities like auto-completion where you need to find prefixes shared by many words). */
 
