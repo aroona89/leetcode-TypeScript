@@ -1,44 +1,78 @@
-// Q4 "Longest Common Prefix (topic covered: string, trie)"
+/* Q4 "Longest Common Prefix (topic covered: string, trie)"
+A Trie (also known as a prefix tree) is a data structure used to efficiently store and search for a list of words.
+Searching for Prefixes: Tries allow efficient prefix-based searches 
+(e.g., Useful for functionalities like auto-completion where you need to find prefixes shared by many words). */
 
-function twoSum(nums: number[], target: number): number[] {
-  const map: Map<number, number> = new Map(); // Create a map to store values and their indices
+class Trie {
+  private root: Node;
 
-  for (let i = 0; i < nums.length; i++) {
-    const complement = target - nums[i]; // Calculate the number needed to reach the target
-
-    if (map.has(complement)) {
-      // If the complement exists in the map, return its index and the current index
-      return [map.get(complement)!, i]; // Non-Null Assertion Operator
-    }
-    // Otherwise, add the current value and its index to the map
-    map.set(nums[i], i);
+  constructor() {
+    this.root = new Node();
   }
-  // If no solution is found, return an empty array
-  return [];
+
+  insert(word: string) {
+    let node = this.root;
+    for (let char of word) {
+      if (!node.children[char]) {
+        node.children[char] = new Node();
+      }
+      node = node.children[char];
+      node.count++; // Increment count for each node
+    }
+    node.isWord = true;
+  }
+
+  longestCommonPrefix(strs: string[]): string {
+    let prefix = "";
+    let node = this.root;
+    for (let char of strs[0]) {
+      if (node.children[char] && node.children[char].count === strs.length) {
+        prefix += char;
+        node = node.children[char];
+      } else {
+        break;
+      }
+    }
+    return prefix;
+  }
 }
 
-const nums = [2, 7, 11, 15];
-// const nums = [3, 7, 11, 15];
-// const nums = [7, 1, 3, 8, 15];
-// const nums = [1, 7, 3, 8, 15];
-const target = 9;
-const result = twoSum(nums, target);
-console.log(result); // Output: [0, 1]
+class Node {
+  children: { [key: string]: Node };
+  isWord: boolean;
+  count: number;
 
-// myMap.forEach((value, key) => console.log(value));
-// myMap.forEach();
+  constructor() {
+    this.children = {};
+    this.isWord = false;
+    this.count = 0;
+  }
+}
 
-// using Brute Force Approach
-// function twoSum(nums: number[], target: number): number [] {
-//     let outputArray = [];
-//     for (var i = 0; i < nums.length; i++) {
-//         var x = nums[i];
-//         var y = nums[i+1];
-//         if (x + y == target) {
-//             outputArray.push(i, i+1)
-//         }
+function longestCommonPrefix(strs: string[]): string {
+  const trie = new Trie();
+  for (let str of strs) {
+    trie.insert(str);
+  }
+  return trie.longestCommonPrefix(strs);
+}
+
+const strs = ["flower", "flow", "flight"];
+console.log("The longest common prefix is:", longestCommonPrefix(strs));
+
+
+// Method-2
+// function longestCommonPrefix(strs: string[]): string {
+//   let prefix = strs[0];
+//   for (let i = 1; i < strs.length; i++) {
+//     while (!strs[i].startsWith(prefix)) {
+//       prefix = prefix.slice(0, -1);
 //     }
-//     return outputArray
+//     if (prefix === '') {
+//       return prefix;
+//     }
+//   }
+//   return prefix;
 // };
-// let nums = [2, 7, 11, 15], target = 9;
-// console.log(twoSum(nums, target));
+// let  strs = ["flower","flow","flight"];
+// console.log(longestCommonPrefix(strs));
